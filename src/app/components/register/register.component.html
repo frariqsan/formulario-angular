@@ -1,0 +1,43 @@
+<h2>User register</h2>
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="userForm">
+    <fieldset>
+      <label for="username">Username:</label>
+      <input type="text" id="username" formControlName="username" />
+      <!-- Este div de debajo va a existir cuando: la validacion del campo username no sea valida Y o bien, hemos interactuado ya con el input username o hemos hecho submit a la fuerza del formulario -->
+      <div
+        *ngIf="
+          !userForm.get('username')?.valid &&
+          (userForm.get('username')?.dirty || submitted)
+        "
+      >
+        Username tiene que tener un mínimo de 3 caracteres
+      </div>
+    </fieldset>
+    <fieldset>
+      <label for="password">Password:</label>
+      <input type="password" id="password" formControlName="password" />
+      <div
+        *ngIf="
+          !userForm.get('password')?.valid &&
+          (userForm.get('password')?.dirty || submitted)
+        "
+      >
+       Password tiene que tener un mínimo de 8 caracteres, una mayúscula, una mínuscula, un número y un cáracter especial
+      </div>
+    </fieldset>
+    <fieldset>
+      <label for="rePassword">Repeat Password:</label>
+      <input type="password" id="rePassword" formControlName="rePassword" />
+      <div
+        *ngIf="
+          !userForm.get('rePassword')?.valid &&
+          (userForm.get('rePassword')?.dirty || submitted)
+        "
+      >
+       Este campo tiene que coincidir con la contraseña original
+      </div>
+    </fieldset>
+    <!-- Con el atributo [disabled] desactivamos el click hasta que se cumplan las validaciones del formulario -->
+    <button type="submit" [disabled]="!userForm.valid">Register</button>
+  </form>
+  
